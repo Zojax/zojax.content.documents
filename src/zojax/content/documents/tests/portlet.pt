@@ -1,0 +1,3 @@
+
+<tal:block tal:content="structure portlet:portlet.documents" />
+

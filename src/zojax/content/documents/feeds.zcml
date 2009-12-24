@@ -1,0 +1,25 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   i18n_domain="zojax.content.documents">
+
+  <adapter 
+     name="documents"
+     factory=".feeds.DocumentsRSSFeed" />
+
+  <class class=".feeds.DocumentsRSSFeed">
+    <require
+       permission="zope.View"
+       interface="zojax.content.feeds.interfaces.IFeed" />
+  </class>
+
+  <adapter 
+     name="documents"
+     factory=".feeds.DocumentsWorkspaceRSSFeed" />
+
+  <class class=".feeds.DocumentsWorkspaceRSSFeed">
+    <require
+       permission="zope.View"
+       interface="zojax.content.feeds.interfaces.IFeed" />
+  </class>
+
+</configure>

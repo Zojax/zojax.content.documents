@@ -1,0 +1,44 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.content.documents">
+
+  <zojax:reservedNames
+     names="documents"
+     for="zojax.content.space.interfaces.IContentSpace" />
+
+  <zojax:content
+     name="documents.workspace"
+     title="Documents workspace"
+     class=".workspace.Documents"
+     schema=".interfaces.IDocuments"
+     contains=".interfaces.IDocumentType"
+     type="zojax.content.type.interfaces.IInactiveType" />
+
+  <!-- documents workspace -->
+  <class class=".workspace.Documents">
+    <implements interface="zojax.catalog.interfaces.ISearchContext" />
+    <implements interface="zojax.extensions.interfaces.IExtensible" />
+    <implements interface="zojax.ownership.interfaces.IInheritOwnership" />
+    <implements interface="zojax.content.type.interfaces.IRenameNotAllowed" />
+    <implements interface="zojax.content.type.interfaces.ISearchableContent" />
+    <implements interface="zojax.content.type.interfaces.IUnremoveableContent" />
+
+    <require
+       permission="zope.View"
+       interface=".interfaces.IDocuments
+		  zope.app.container.interfaces.IReadContainer" />
+
+    <require
+       permission="zojax.ModifyContent"
+       set_schema=".interfaces.IDocuments"
+       interface="zope.app.container.interfaces.IWriteContainer" />
+  </class>
+
+  <!-- documents workspace factory -->
+  <adapter
+     name="documents"
+     factory=".workspace.DocumentsFactory" />
+
+</configure>

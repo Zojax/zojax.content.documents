@@ -1,0 +1,41 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.content.documents">
+
+  <zojax:content
+     name="documents.folder"
+     title="Documents folder"
+     class=".container.DocumentsContainer"
+     schema=".interfaces.IDocumentsContainer"
+     contains=".interfaces.IDocumentType"
+     containers="documents.workspace documents.folder"
+     type=".interfaces.IDocumentType
+	   zojax.content.type.interfaces.IActivePortalType"
+     description="A documents folder which can contain documents."
+     permission="zojax.AddDocuments" />
+
+  <class class=".container.DocumentsContainer">
+    <implements interface="zojax.ownership.interfaces.IOwnerAware" />
+    <implements interface="zojax.content.type.interfaces.IContentContainer" />
+    <implements interface="zojax.content.type.interfaces.IShareableContent" />
+    <implements interface="zojax.content.type.interfaces.ISearchableContent" />
+    <implements interface="zojax.content.type.interfaces.IContainerContentsAware" />
+
+    <require
+       permission="zope.View"
+       interface="zojax.content.type.interfaces.IItem
+		  zope.app.container.interfaces.IReadContainer" />
+
+    <require
+       permission="zojax.ModifyContent"
+       set_schema="zojax.content.type.interfaces.IItem"
+       interface="zope.app.container.interfaces.IWriteContainer" />
+  </class>
+
+  <!-- draft -->
+  <zojax:draft
+     content="documents.folder"
+     publish="zojax.AddDocuments" />
+
+</configure>

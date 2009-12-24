@@ -1,0 +1,92 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.content.documents">
+
+  <!-- documents workspace -->
+  <browser:defaultView
+     name="index.html"
+     for="..interfaces.IDocuments" />
+
+  <zojax:pagelet
+     name="index.html"
+     for="..interfaces.IDocuments"
+     template="documents.pt"
+     permission="zope.View" />
+
+  <!-- documents workspace -->
+  <browser:defaultView
+     name="index.html"
+     for="..interfaces.IDocumentsContainer" />
+
+  <zojax:pagelet
+     name="index.html"
+     for="..interfaces.IDocumentsContainer"
+     template="folder.pt"
+     provides="zojax.content.type.interfaces.IContentView"
+     permission="zope.View" />
+
+  <!-- browse documents -->
+  <zojax:pagelet
+     name="browse-documents.html"
+     for="zojax.content.space.interfaces.IContentSpace"
+     template="browse.pt"
+     permission="zope.View" />
+
+  <!-- browse documents action -->
+  <adapter
+     name="content.documents.browse"
+     for="zojax.content.space.interfaces.IContentSpace *"
+     provides=".interfaces.IBrowseDocumentsAction"
+     factory=".documents.BrowseDocumentsAction" />
+
+  <adapter
+     name="content.documents.browse"
+     for="..interfaces.IDocuments *"
+     provides=".interfaces.IBrowseDocumentsAction"
+     factory=".documents.BrowseDocumentsAction" />
+
+  <!-- documents table -->
+  <adapter
+     name="content.documents.browse"
+     provides="zope.contentprovider.interfaces.IContentProvider"
+     factory=".documents.DocumentsTable" />
+
+  <adapter
+     name="content.documents.browse"
+     provides="zope.contentprovider.interfaces.IContentProvider"
+     factory=".documents.SpaceDocumentsTable" />
+
+  <!-- icons -->
+  <browser:icon
+     name="zmi_icon"
+     for="..interfaces.IDocuments"
+     file="documents.png" />
+
+  <browser:icon
+     name="zmi_icon"
+     for="..interfaces.IDocumentsFactory"
+     file="documents.png" />
+
+  <browser:icon
+     name="zmi_icon"
+     for="..interfaces.IDocumentsRSSFeed"
+     file="documents.png" />
+
+  <browser:icon
+     name="zmi_icon"
+     for=".interfaces.IBrowseDocumentsAction"
+     file="documents.png" />
+
+  <browser:icon
+     name="zmi_icon"
+     for="..interfaces.IDocumentsContainer"
+     file="folder.png" />
+
+  <browser:icon
+     name="zmi_icon"
+     for="zojax.content.documents_folder"
+     file="folder.png" />
+
+</configure>
