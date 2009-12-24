@@ -1,0 +1,12 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zope">
+
+  <!-- draft -->
+  <zojax:draft
+     content="documents.folder"
+     publish="zojax.AddDocuments"
+     submit="zojax.SubmitDocuments" />
+
+</configure>

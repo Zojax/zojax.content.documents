@@ -1,0 +1,36 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.content.documents">
+
+  <interface
+     name="Document"
+     interface=".interfaces.IDocumentType"
+     type="zojax.content.type.interfaces.IContentTypeType" />
+
+  <!-- permissions -->
+  <include file="permissions.zcml" />
+
+  <!-- workspace -->
+  <include file="workspace.zcml" />
+
+  <!-- documents container -->
+  <include file="container.zcml" />
+
+  <!-- capabilities -->
+  <include file="capability.zcml" />
+
+  <!-- rss feeds -->
+  <include file="feeds.zcml" />
+
+  <!-- portlets -->
+  <include package=".portlets" />
+
+  <!-- browser view -->
+  <include package=".browser" />
+
+  <!-- translations -->
+  <i18n:registerTranslations directory="locales" />
+
+</configure>

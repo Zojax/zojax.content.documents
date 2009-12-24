@@ -1,0 +1,44 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <!-- support activity -->
+  <class class=".container.DocumentsContainer"
+	 zcml:condition="installed zojax.activity">
+    <implements interface="zojax.activity.interfaces.IActivityAware" />
+  </class>
+
+  <!-- support extensions -->
+  <class class=".container.DocumentsContainer"
+	 zcml:condition="installed zojax.extensions">
+    <implements interface="zojax.extensions.interfaces.IExtensible" />
+  </class>
+
+  <!-- support sorting -->
+  <class class=".container.DocumentsContainer"
+	 zcml:condition="installed zojax.content.sorting">
+    <implements interface="zojax.content.sorting.interfaces.ISortable" />
+  </class>
+
+  <!-- support comments notifications -->
+  <class class=".container.DocumentsContainer"
+	 zcml:condition="installed zojax.content.discussion">
+    <implements 
+       interface="zojax.content.discussion.interfaces.ICommentsNotificationsAware" />
+  </class>
+
+  <!-- container view models -->
+  <class class=".container.DocumentsContainer"
+	 zcml:condition="installed zojax.content.models.container">
+    <implements
+       interface="zojax.content.models.container.interfaces.IContainerModelsAware" />
+  </class>
+
+  <!-- support comments notifications -->
+  <class class=".workspace.Documents"
+	 zcml:condition="installed zojax.content.discussion">
+    <implements 
+       interface="zojax.content.discussion.interfaces.ICommentsNotificationsAware" />
+  </class>
+
+</configure>

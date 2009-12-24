@@ -1,0 +1,64 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.content.documents">
+
+  <permission
+     id="zojax.AddDocuments"
+     title="Add documents"
+     description="Allow add new documents to portal." />
+
+  <permission
+     id="zojax.SubmitDocuments"
+     title="Submit documents"
+     description="Allow submit documents to portal." />
+
+  <permission
+     id="zojax.RetractDocuments"
+     title="Retract documents"
+     description="Allow retract published documents." />
+
+  <interface
+     name="Documents permissions"
+     interface=".interfaces.IDocumentsPermissions"
+     type="zojax.security.interfaces.IPermissionCategoryType" />
+
+  <zojax:permission
+     permission="zojax.AddDocuments"
+     category=".interfaces.IDocumentsPermissions" />
+
+  <zojax:permission
+     permission="zojax.SubmitDocuments"
+     category=".interfaces.IDocumentsPermissions" />
+
+  <zojax:permission
+     permission="zojax.RetractDocuments"
+     category=".interfaces.IDocumentsPermissions" />
+
+  <zojax:contentpermission
+     for="zojax.content.space.interfaces.IContentSpace"
+     permission="zojax.AddDocuments"
+     managepermission="zojax.ManageContentPermission"
+     class=".permission.SpacePermission"
+     category=".interfaces.IDocumentsPermissions" />
+  
+  <zojax:contentpermission
+     for="zojax.content.space.interfaces.IContentSpace"
+     permission="zojax.SubmitDocuments"
+     managepermission="zojax.ManageContentPermission"
+     class=".permission.SpacePermission"
+     category=".interfaces.IDocumentsPermissions" />
+
+  <zojax:contentpermission
+     for="zojax.content.space.interfaces.IContentSpace"
+     permission="zojax.RetractDocuments"
+     managepermission="zojax.ManageContentPermission"
+     class=".permission.SpacePermission"
+     category=".interfaces.IDocumentsPermissions" />
+
+  <subscriber
+     provides="zojax.content.permissions.interfaces.IPermissionContentTypes"
+     factory=".permission.documentsPermissionModified" />
+
+</configure>

@@ -1,0 +1,15 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.content.documents">
+
+  <!-- Documents portlet -->
+  <zojax:portlet
+     name="portlet.documents"
+     title="Documents"
+     description="Recent documents"
+     class=".documents.DocumentsPortlet"
+     schema="zojax.content.space.portlets.interfaces.IRecentContentPortlet" />
+
+</configure>

@@ -1,0 +1,349 @@
+==================
+Document workspace
+==================
+
+    >>> from zope.interface.verify import verifyClass
+    >>> from zojax.content.documents import workspace, interfaces
+
+    >>> root = getRootFolder()
+
+    >>> verifyClass(interfaces.IDocuments, workspace.Documents)
+    True
+    >>> verifyClass(interfaces.IDocumentsFactory, workspace.DocumentsFactory)
+    True
+
+
+Browser tests
+
+    >>> from zope.testbrowser.testing import Browser
+
+    >>> admin = Browser()
+    >>> admin.addHeader("Authorization", "Basic mgr:mgrpw")
+    >>> admin.handleErrors = False
+    >>> admin.open('http://localhost/space/')
+    >>> 'documents' in admin.contents
+    False
+
+
+Let's enable documents workspace
+
+    >>> admin.open('http://localhost/space/context.html/content/')
+    >>> admin.getLink('Workspaces').click()
+    >>> admin.getControl(name="workspaces.widgets.workspaces:list").value = ['documents']
+    >>> admin.getControl(name="content.edit.buttons.save").click()
+
+    >>> admin.open('http://localhost/space/')
+    >>> print admin.contents
+    <html>
+    ...
+    <div class="z-space-views">
+      <ul>
+         <li class="selected">
+            <a href="http://localhost/space/documents/">
+               <img src="http://localhost/@@/zojax-content-documents-interfaces-IDocumentsFactory-zmi_icon.png" />
+               Documents</a>
+         </li>
+      </ul>
+    </div>
+    ...
+    <h1 class="z-content-title">Documents</h1>
+    ...
+    </html>
+
+
+Now we can create documents container and documents
+
+    >>> admin.getLink('Personal space').click()
+    >>> admin.getLink('Your stuff').click()
+    >>> print admin.contents
+    <html>
+    ...
+    <div class="z-portlet-item odd">
+        <img src="..." alt="ContentType" width="16" height="16" border="0" />
+        <a href="http://localhost/people/manager/content/content.document/"
+           title="A document in the site. Can contain rich text.">
+          Document
+        </a>
+    </div>
+    <div class="z-portlet-item even">
+       <img src="..." />
+       <a href="http://localhost/people/manager/content/documents.folder/"
+          title="A documents folder which can contain documents.">
+          Documents folder
+       </a>
+    </div>
+    ...
+    </html>
+
+    >>> admin.getLink('Documents folder').click()
+    >>> admin.getLink('Create: Documents folder').click()
+
+    >>> admin.getLink('Documents').click()
+    >>> admin.open('http://localhost/space/documents/context.html/contents/')
+    >>> print admin.contents
+    <html>
+    ...
+    <div>
+       <a href="http://localhost/space/documents/+/content.document/">Document</a>
+       <div class="byline">
+          A document in the site. Can contain rich text. &nbsp;
+       </div>
+    </div>
+    ...
+    <div>
+       <a href="http://localhost/space/documents/+/documents.folder/">Documents folder</a>
+       <div class="byline">
+          A documents folder which can contain documents. &nbsp;
+       </div>
+    </div>
+    ...
+    </html>
+
+
+Create documents folder
+
+    >>> admin.getLink('Documents folder').click()
+    >>> admin.reload()
+
+    >>> admin.getControl('Title').value = u'Test documents'
+    >>> admin.getControl('Short Name').value = u'testdocuments'
+    >>> admin.getControl('Publish').click()
+    >>> print admin.contents
+    <html>
+    ...<div class="statusMessage">Your Documents folder has been published.</div>...
+    ...<h1 class="z-content-title">Test documents</h1>...
+    ...
+    </html>
+
+
+Create document in folder
+
+    >>> admin.open('http://localhost/space/documents/testdocuments/+/content.document/')
+    >>> admin.getControl('Title').value = 'document'
+    >>> admin.getControl('Publish').click()
+
+
+Browser workspace documents, documents workspace shows all documents
+
+    >>> admin.open('http://localhost/space/documents/')
+    >>> print admin.contents
+    <html>
+    ...
+    ...<div class="context-actions">
+      <ul>
+        <li>
+          <a title="Documents rss feed" href="@@feeds/documents">
+             <img src="http://localhost/@@/rss-icon.png" />
+          </a>
+        </li>
+      </ul>
+    </div>
+    ...
+    <a href="http://localhost/space/documents/testdocuments/Document/"
+       title="">document</a>
+    ...
+    <a href="http://localhost/space/documents/testdocuments/"
+         title="">Test documents</a>
+    ...
+    </html>
+
+Documents rss feed
+
+    >>> admin.open('http://localhost/space/documents/@@feeds/documents')
+    >>> print admin.contents
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+      <channel>
+        <title>Documents - Documents</title>
+        <link>http://localhost/space/documents/</link>
+        <description>List of recently changed documents in documents worspace.</description>
+        <atom:link rel="self" type="application/rss+xml"
+                   href="http://localhost/space/documents/@@feeds/documents"/>
+        <item>
+          <title>document</title>
+          <description></description>
+          <guid isPermaLink="true">http://localhost/space/documents/testdocuments/Document/</guid>
+          <author> (Manager)</author>
+          <pubDate>...</pubDate>
+        </item>
+        <item>
+          <title>Test documents</title>
+          <description></description>
+          <guid isPermaLink="true">http://localhost/space/documents/testdocuments/</guid>
+          <author> (Manager)</author>
+          <pubDate>...</pubDate>
+        </item>
+      </channel>
+    </rss>
+
+Personal content
+
+    >>> admin.open('http://localhost/space/')
+    >>> admin.getLink('Personal space').click()
+    >>> admin.getLink('Your stuff').click()
+    >>> print admin.contents
+    <html>
+    ...
+    <td class="ctb-title">
+      <a href="http://localhost/space/documents/testdocuments/Document/"
+         title="">document</a>
+    </td>
+        <td class="ctb-location">
+        <img src="..." alt="DocumentsContainer" width="16" height="16" border="0" />
+        <a href="http://localhost/space/documents/testdocuments/"
+           title="">Test documents</a>
+    </td>
+    ...
+    <td class="ctb-title">
+      <a href="http://localhost/space/documents/testdocuments/"
+         title="">Test documents</a>
+    </td>
+        <td class="ctb-location">
+        <img src="..." alt="Documents" width="16" height="16" border="0" />
+        <a href="http://localhost/space/documents/" title="">Documents</a>
+    </td>
+    ...
+    </html>
+
+Documents portlet
+
+    >>> admin.open('http://localhost/space/portlet')
+    >>> print admin.contents
+    <html>
+    ...
+    ...<div class="z-portlet portlet-documents">
+      <h2 class="z-portlet-header">
+        <a class="z-portlet-feed" title="RSS feed" href="http://localhost/space/@@feeds/documents">
+          <img src="http://localhost/@@/rss-icon.png" />
+        </a>
+        Documents
+      </h2>
+      <div class="z-portlet-body">
+        <div class="z-portlet-item odd">
+          <span>
+             <img src="..." alt="Content" width="16" height="16" border="0" />
+             <a href="http://localhost/space/documents/testdocuments/Document/">document</a>
+          </span>
+          <div class="z-portlet-item-details">
+             ... in
+             <a href="http://localhost/space/">Space</a>
+          </div>
+        </div> <div class="z-portlet-item even">
+          <span>
+            <img src="..." alt="DocumentsContainer" width="16" height="16" border="0" />
+            <a href="http://localhost/space/documents/testdocuments/">Test documents</a>
+          </span>
+          <div class="z-portlet-item-details">
+             ... in
+             <a href="http://localhost/space/">Space</a>
+          </div>
+        </div>
+      </div>
+      <div class="z-portlet-footer">
+        <a href="http://localhost/space/browse-documents.html">More...</a>
+      </div>
+    </div>...
+    ...
+    </html>
+
+Browse documents
+
+    >>> admin.open('http://localhost/space/browse-documents.html')
+    >>> print admin.contents
+    <html>
+    ...
+    <h1 class="z-content-title">Browse documents</h1>
+    <div class="z-page-description">
+        List of recently modified documents in current space and all sub spaces.</div>
+    ...
+    <a href="http://localhost/space/documents/testdocuments/Document/"
+         title="">document</a>
+    ...
+    <a href="http://localhost/space/documents/testdocuments/"
+         title="">Test documents</a>
+    ...
+    </html>
+
+
+Space documents rss feed
+
+    >>> admin.open('http://localhost/space/@@feeds/documents')
+    >>> print admin.contents
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+      <channel>
+        <title>Documents - Space</title>
+        <link>http://localhost/space/</link>
+        <description>List of recently changed documents in current space and all sub spaces.</description>
+        <atom:link rel="self" type="application/rss+xml"
+                   href="http://localhost/space/@@feeds/documents"/>
+        <item>
+          <title>document</title>
+          <description></description>
+          <guid isPermaLink="true">http://localhost/space/documents/testdocuments/Document/</guid>
+          <author> (Manager)</author>
+          <pubDate>...</pubDate>
+        </item>
+        <item>
+          <title>Test documents</title>
+          <description></description>
+          <guid isPermaLink="true">http://localhost/space/documents/testdocuments/</guid>
+          <author> (Manager)</author>
+          <pubDate>...</pubDate>
+        </item>
+      </channel>
+    </rss>
+
+
+User
+
+    >>> user = Browser()
+    >>> user.handleErrors = False
+    >>> user.open("http://localhost/login.html")
+    >>> user.getControl('Login Name').value = 'user@zojax.net'
+    >>> user.getControl('Password').value = '12345'
+    >>> user.getControl('Log in').click()
+
+    >>> user.open('http://localhost/space/')
+    >>> user.getLink('Personal space').click()
+    >>> user.getLink('Your stuff').click()
+    >>> 'Documents container' in user.contents
+    False
+
+
+Security settings
+
+    >>> admin.open('http://localhost/space/context.html')
+    >>> admin.getLink('Security').click()
+
+    >>> admin.getControl(name="principal-zojax_pf01:list").value = [
+    ...     'zojax.SubmitDocuments']
+    >>> admin.getControl('Update permissions').click()
+
+    >>> user.reload()
+    >>> print user.contents
+    <html>
+    ...
+    <h2 class="z-portlet-header">Your Stuff</h2>
+    ...
+    <div class="z-portlet-item odd">
+       <img src="..." />
+       <a href="http://localhost/people/user/content/documents.folder/"
+          title="A documents folder which can contain documents.">
+          Documents folder
+       </a>
+    </div>
+    ...
+    </html>
+
+
+Disable documents workspace
+
+    >>> admin.open('http://localhost/space/context.html/content/')
+    >>> admin.getLink('Workspaces').click()
+    >>> admin.getControl(name="workspaces.widgets.workspaces:list").value = []
+    >>> admin.getControl(name="content.edit.buttons.save").click()
+
+    >>> admin.open('http://localhost/space/')
+    >>> u'Documents' in admin.contents
+    False
