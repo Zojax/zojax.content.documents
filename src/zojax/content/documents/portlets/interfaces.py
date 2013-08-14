@@ -15,5 +15,26 @@
 
 $Id$
 """
+from zojax.portlet.interfaces import IPortletManagerWithStatus, statusVocabulary, ENABLED
 from zope import schema, interface
 from zojax.content.documents.interfaces import _
+
+
+class IContentPortletsManager(interface.Interface):
+    """ content column portlets manager """
+
+
+class IContentPortletsManagerConfiguration(IPortletManagerWithStatus):
+    """ configuration schema """
+
+    portletIds = schema.Tuple(
+        title=_(u'Portlets'),
+        value_type=schema.Choice(vocabulary="zojax portlets"),
+        default=('portlet.recentcontent',),
+        required=True)
+
+    status = schema.Choice(
+        title=_(u'Status'),
+        vocabulary=statusVocabulary,
+        default=ENABLED,
+        required=True)

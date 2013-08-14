@@ -12,4 +12,14 @@
      class=".documents.DocumentsPortlet"
      schema="zojax.content.space.portlets.interfaces.IRecentContentPortlet" />
 
+  <!-- central column portlets -->
+  <zojax:portletManager
+     name="columns.content"
+     title="Content column portlets"
+     for="..interfaces.IDocuments"
+     schema=".interfaces.IContentPortletsManagerConfiguration"
+     provides=".interfaces.IContentPortletsManager"
+     class="zojax.portlet.manager.PortletManagerWithStatus" />
+
+
 </configure>
