@@ -154,27 +154,38 @@ Documents rss feed
     <?xml version="1.0" encoding="UTF-8"?>
     <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
       <channel>
-        <title>Documents - Documents</title>
+        <title>Documents - Documents
+    </title>
         <link>http://localhost/space/documents/</link>
         <description>List of recently changed documents in documents worspace.</description>
+    <BLANKLINE>
+    <BLANKLINE>
+    <BLANKLINE>
+    <BLANKLINE>
+    <BLANKLINE>
         <atom:link rel="self" type="application/rss+xml"
                    href="http://localhost/space/documents/@@feeds/documents"/>
         <item>
           <title>document</title>
-          <description></description>
+          <description type="html"><![CDATA[]]></description>
           <guid isPermaLink="true">http://localhost/space/documents/testdocuments/Document/</guid>
+    <BLANKLINE>
           <author> (Manager)</author>
+    <BLANKLINE>
           <pubDate>...</pubDate>
         </item>
         <item>
           <title>Test documents</title>
-          <description></description>
+          <description type="html"><![CDATA[]]></description>
           <guid isPermaLink="true">http://localhost/space/documents/testdocuments/</guid>
+    <BLANKLINE>
           <author> (Manager)</author>
+    <BLANKLINE>
           <pubDate>...</pubDate>
         </item>
       </channel>
     </rss>
+    <BLANKLINE>
 
 Personal content
 
@@ -211,40 +222,42 @@ Documents portlet
     >>> print admin.contents
     <html>
     ...
-    ...<div class="z-portlet portlet-documents">
-      <h2 class="z-portlet-header">
-        <a class="z-portlet-feed" title="RSS feed" href="http://localhost/space/@@feeds/documents">
-          <img src="http://localhost/@@/rss-icon.png" />
-        </a>
-        Documents
-      </h2>
+    	<li class="">
+    	  <a href="http://localhost/space/documents/">
+    	    <img src="http://localhost/@@/zojax-content-documents-interfaces-IDocumentsFactory-zmi_icon.png" />
+    	    Documents</a>
+    	</li>
+          </ul>
+        </div>
+      </div>
+    ...
       <div class="z-portlet-body">
         <div class="z-portlet-item odd">
           <span>
-             <img src="..." alt="Content" width="16" height="16" border="0" />
-             <a href="http://localhost/space/documents/testdocuments/Document/">document</a>
-          </span>
-          <div class="z-portlet-item-details">
-             ... in
-             <a href="http://localhost/space/">Space</a>
+    	<img src="http://localhost/@@/zojax-content-type-interfaces-IContent-zmi_icon.png" alt="Content" width="16" height="16" border="0" />
+    	<a href="http://localhost/space/documents/testdocuments/Document/">document</a>
+    ...
+    ...in
+    	<a href="http://localhost/space/">Space</a>
           </div>
         </div> <div class="z-portlet-item even">
           <span>
-            <img src="..." alt="DocumentsContainer" width="16" height="16" border="0" />
-            <a href="http://localhost/space/documents/testdocuments/">Test documents</a>
-          </span>
-          <div class="z-portlet-item-details">
-             ... in
-             <a href="http://localhost/space/">Space</a>
+    	<img src="http://localhost/@@/zojax-content-documents-interfaces-IDocumentsContainer-zmi_icon.png" alt="DocumentsContainer" width="16" height="16" border="0" />
+    	<a href="http://localhost/space/documents/testdocuments/">Test documents</a>
+    ...
+    ...in
+    	<a href="http://localhost/space/">Space</a>
           </div>
         </div>
+    <BLANKLINE>
       </div>
       <div class="z-portlet-footer">
         <a href="http://localhost/space/browse-documents.html">More...</a>
       </div>
-    </div>...
     ...
     </html>
+
+
 
 Browse documents
 
@@ -272,28 +285,38 @@ Space documents rss feed
     <?xml version="1.0" encoding="UTF-8"?>
     <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
       <channel>
-        <title>Documents - Space</title>
+        <title>Documents - Space
+    </title>
         <link>http://localhost/space/</link>
         <description>List of recently changed documents in current space and all sub spaces.</description>
+    <BLANKLINE>
+    <BLANKLINE>
+    <BLANKLINE>
+    <BLANKLINE>
+    <BLANKLINE>
         <atom:link rel="self" type="application/rss+xml"
                    href="http://localhost/space/@@feeds/documents"/>
         <item>
           <title>document</title>
-          <description></description>
+          <description type="html"><![CDATA[]]></description>
           <guid isPermaLink="true">http://localhost/space/documents/testdocuments/Document/</guid>
+    <BLANKLINE>
           <author> (Manager)</author>
+    <BLANKLINE>
           <pubDate>...</pubDate>
         </item>
         <item>
           <title>Test documents</title>
-          <description></description>
+          <description type="html"><![CDATA[]]></description>
           <guid isPermaLink="true">http://localhost/space/documents/testdocuments/</guid>
+    <BLANKLINE>
           <author> (Manager)</author>
+    <BLANKLINE>
           <pubDate>...</pubDate>
         </item>
       </channel>
     </rss>
-
+    <BLANKLINE>
 
 User
 
