@@ -321,11 +321,8 @@ Space documents rss feed
 User
 
     >>> user = Browser()
+    >>> user.addHeader("Authorization", "Basic user:userpw")
     >>> user.handleErrors = False
-    >>> user.open("http://localhost/login.html")
-    >>> user.getControl('Login Name').value = 'user@zojax.net'
-    >>> user.getControl('Password').value = '12345'
-    >>> user.getControl('Log in').click()
 
     >>> user.open('http://localhost/space/')
     >>> user.getLink('Personal space').click()

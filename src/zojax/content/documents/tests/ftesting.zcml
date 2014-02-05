@@ -88,6 +88,7 @@
   <grant role="zope.Manager" principal="zope.mgr" />
   <grant permission="zojax.PersonalSpace" principal="zope.Everybody" />
   <grant permission="zojax.PersonalContent" principal="zope.Everybody" />
+  <grant permission="zojax.SubmitDocuments" principal="zope.user" />
 
   <grantAll role="zope.Manager" />
 
